@@ -1,4 +1,5 @@
 //inertia.js Docs https://inertiajs.com/pages
+//reset users passwords in DB - https://devdojo.com/bobbyiliev/how-to-quickly-change-the-password-for-a-user-in-laravel
 
 import ChatLayout from "@/Layouts/ChatLayout";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";

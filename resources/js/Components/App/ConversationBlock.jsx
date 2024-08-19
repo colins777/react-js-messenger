@@ -50,6 +50,26 @@ export default function ConversationBlock({
                 <UserAvatar user={conversation} online={online} />
             )}
             { conversation.is_group && <GroupAvatar />}
+            <div className={
+                                'flex-1 text-xs max-w-full overflow-hidden' +
+                                (conversation.is_user && conversation.blocked_at
+                                ? ' opacity-50'
+                                : '')
+                            }
+            >
+                <div className={'flex gap-1 justify-between items-center'}>
+                    <h3 className={'text-sm font-semibold overflow-hidden text-nowrap text-ellipsis'}>
+                        {conversation.last_message && (
+                            <p className='text-xs text-nowrap overflow-hidden text-ellipsis'>
+                                {conversation.last_message}
+                            </p>
+                        )}
+                    </h3>
+                </div>
+            </div>
+            {currentUser.is_admin && conversation.is_user && (
+                <UserOptionsDropDown conversation={conversation} />
+            ) }
         </Link>
     );
 }

@@ -1,16 +1,39 @@
 import {Link, usePage} from "@inertiajs/react";
 
 
-export default function UserAvatar({
-                                        conversation,
-                                        online,
-                                        selectedConversation
-                                    }) {
+const UserAvatar = function({user,
+                            online = null,
+                            profile = false
+                            }) {
 
+    let onlineClass = online === true ? 'online' : online === false ? 'offline' : '';
 
-
+    const sizeClass = profile ? 'w-40' : 'w-8';
 
     return (
-        <h1>UserAvatar</h1>
+        <>
+            {
+                user.avatar_url && (
+                    <div className={`chat-image avatar ${onlineClass}`}>
+                        <div className={`rounded-full ${sizeClass}`}>
+                            <img src={user.avatar_url} alt="avatar" />
+                        </div>
+                    </div>
+                )
+            }
+            {!user.avatar_url && (
+                <div className={`chat-image avatar placeholder ${onlineClass}`}>
+                    <div className={`bg-gray-400 text-gray-800 rounded-full  ${sizeClass}`}>
+                        <span className='text-xl'>
+                            {user.name.substring(0, 1)}
+                        </span>
+                    </div>
+                </div>
+            )
+
+            }
+        </>
     );
 }
+
+export default UserAvatar;

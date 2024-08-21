@@ -1,16 +1,17 @@
-import {Link, usePage} from "@inertiajs/react";
-import UserAvatar from "./UserAvatar"
+import {UserIcon} from "@heroicons/react/24/solid";
 
-export default function GroupAvatar({
-                                              conversation,
-                                              online,
-                                              selectedConversation
-                                          }) {
-
-
-
-
+const GroupAvatar = function ({}) {
     return (
-        <h1>GroupAvatar</h1>
+        <>
+            <div className={`avatar placeholder`}>
+                <div className={`bg-gray-400 text-gray-800 rounded-full w-8`}>
+                    <span className='text-xl'>
+                        <UserIcon className='w-4' />
+                    </span>
+                </div>
+            </div>
+        </>
     );
 }
+
+export default GroupAvatar;

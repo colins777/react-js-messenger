@@ -2,6 +2,7 @@ import {Link, usePage} from "@inertiajs/react";
 import UserAvatar from "./UserAvatar"
 import GroupAvatar from "./GroupAvatar"
 import UserOptionsDropDown from "./UserOptionsDropDown"
+//import {useEffect, useState} from "react";
 
 export default function ConversationBlock({
         conversation,

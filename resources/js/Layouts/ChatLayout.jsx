@@ -126,16 +126,18 @@ const ChatLayout = ({children}) => {
                     <div className="flex-1 overflow-auto">
                         {sortedConversations &&
                         sortedConversations.map((conversation) => {
-                            <ConversationBlock
-                                    key={`${
-                                        conversation.is_group
-                                            ? 'group_'
-                                            : 'user_'}
+                           return (
+                               <ConversationBlock
+                                   key={`${
+                                       conversation.is_group
+                                           ? 'group_'
+                                           : 'user_'}
                                     ${conversation.id}`}
-                                    conversation={conversation}
-                                    online={!!isUserOnline(conversation.id)}
-                                    selectedConversation={selectedConversation}
-                            />
+                                   conversation={conversation}
+                                   online={!!isUserOnline(conversation.id)}
+                                   selectedConversation={selectedConversation}
+                               />
+                           )
                         })
 
                         }

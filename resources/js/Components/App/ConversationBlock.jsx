@@ -47,6 +47,7 @@ export default function ConversationBlock({
                 (conversation.is_user && currentUser.is_admin ? ' pr-2' : ' pr-4')
               }
         >
+
             { conversation.is_user && (
                 <UserAvatar user={conversation} online={online} />
             )}
@@ -59,15 +60,24 @@ export default function ConversationBlock({
                             }
             >
                 <div className={'flex gap-1 justify-between items-center'}>
+
                     <h3 className={'text-sm font-semibold overflow-hidden text-nowrap text-ellipsis'}>
-                        {conversation.last_message && (
-                            <p className='text-xs text-nowrap overflow-hidden text-ellipsis'>
-                                {conversation.last_message}
-                            </p>
-                        )}
+                        {conversation.name}
                     </h3>
+
+                    {conversation.last_message_date && (
+                        <span className='text-nowrap'>
+                            {conversation.last_message_date}
+                        </span>
+                    )}
                 </div>
+                {conversation.last_message && (
+                    <p className='text-nowrap'>
+                        {conversation.last_message}
+                    </p>
+                )}
             </div>
+
             {currentUser.is_admin && conversation.is_user && (
                 <UserOptionsDropDown conversation={conversation} />
             ) }

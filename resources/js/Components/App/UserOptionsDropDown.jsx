@@ -7,6 +7,7 @@ import React from "react";
 import UserIcon from "@heroicons/react/16/solid/UserIcon";
 import {Menu} from "@headlessui/react";
 import {useState} from "react";
+import ShieldCheckIcon from "@heroicons/react/16/solid/ShieldCheckIcon";
 
 const UserOptionsDropDown = function({conversation}) {
 
@@ -52,20 +53,7 @@ const UserOptionsDropDown = function({conversation}) {
                     </Menu.Button>
 
                 </div>
-                <Transition show={open}>
-                    <div
-                        className={clsx([
-                            // Base styles
-                            'absolute w-48 border transition ease-in-out',
-                            // Shared closed styles
-                            'data-[closed]:opacity-0',
-                            // Entering styles
-                            'data-[enter]:duration-100 data-[enter]:data-[closed]:-translate-x-full',
-                            // Leaving styles
-                            'data-[leave]:duration-300 data-[leave]:data-[closed]:translate-x-full',
-                        ])}
-                    >
-                        <Menu.Items className="absolute right-0 mt-2 w-48 rounded-md bg-gray-800 shadow-lg z-50">
+                        <Menu.Items className="absolute right-0 mt-2 w-48 rounded-md bg-gray-800 shadow-lg z-50" >
                             <div className="px-1 py-1">
                                 <Menu.Item>
                                     {({active}) => (
@@ -80,12 +68,15 @@ const UserOptionsDropDown = function({conversation}) {
                                             {conversation.blocked_at && (
                                                 <>
                                                     <LockOpenIcon className='w-4 h-4 mr-2' />
+                                                    Unblock user
                                                 </>
                                             )}
 
                                             {!conversation.blocked_at && (
                                                 <>
                                                     <LockClosedIcon className='w-4 h-4 mr-2' />
+                                                    Block user
+
                                                 </>
                                             )}
                                         </button>
@@ -115,8 +106,8 @@ const UserOptionsDropDown = function({conversation}) {
 
                                             {!conversation.is_admin && (
                                                 <>
-                                                    <LockClosedIcon className='w-4 h-4 mr-2' />
-                                                    Show admin
+                                                    <ShieldCheckIcon className='w-4 h-4 mr-2' />
+                                                    Add to admin users
                                                 </>
                                             )}
                                         </button>
@@ -126,8 +117,6 @@ const UserOptionsDropDown = function({conversation}) {
                                 </Menu.Item>
                             </div>
                         </Menu.Items>
-                    </div>
-                </Transition>
             </Menu>
         </div>
 

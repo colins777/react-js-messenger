@@ -63,4 +63,12 @@ class Group extends Model
         ];
     }
 
+    public static function updateGroupWidthMessage($groupId, $message)
+    {
+        return self::updateOrCreate(
+            ['id' => $groupId],
+            ['last_message_id' => $message->id]
+        );
+    }
+
 }

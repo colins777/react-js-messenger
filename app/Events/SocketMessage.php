@@ -2,24 +2,33 @@
 
 namespace App\Events;
 
+use App\Http\Resources\MessageResource;
+use App\Models\Message;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class SocketMessage
+class SocketMessage implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
      * Create a new event instance.
      */
-    public function __construct()
+    public function __construct(public Message $message)
     {
         //
+    }
+
+    public function broadcastWidth(): array
+    {
+        return [
+            'message' => new MessageResource($this->message)
+        ];
     }
 
     /**
@@ -29,8 +38,17 @@ class SocketMessage
      */
     public function broadcastOn(): array
     {
-        return [
-            new PrivateChannel('channel-name'),
-        ];
+
+        $message = $this->message;
+        $channels = [];
+
+        if ($message->group->id) {
+            $channels[] = new PrivateChannel('message.group.' . $message->group->id);
+        } else {
+            new PrivateChannel('message.user.' . collect([$message->sender_id, $message->receiver->id])
+            ->sort()->implode('-'));
+        }
+
+        return $channels;
     }
 }

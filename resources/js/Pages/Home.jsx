@@ -9,14 +9,14 @@ import ConversationHeader from "@/Components/App/ConversationHeader";
 import MessageItem from "@/Components/App/MessageItem";
 import MessageInput from "@/Components/App/MessageInput";
 
-function Home({ messages }) {
+//selectedConversation is getting from ChatLayout -> MessageController
+function Home({ messages, selectedConversation }) {
 
     const [localMessages, setlocalMessages] = useState([]);
     const messagesCtrRef = useRef(null);
-    const selectedConversation = 0;
 
     useEffect(() => {
-        setlocalMessages(messages)
+        setlocalMessages(messages ? messages.data.reverse() : []);
     }, [messages])
 
 
@@ -64,7 +64,7 @@ function Home({ messages }) {
 
                 </div>
 
-                <MessageInput conversation={selectedConversation} />
+                {/*<MessageInput conversation={selectedConversation} />*/}
             </>
         )
 

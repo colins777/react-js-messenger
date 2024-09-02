@@ -6,7 +6,7 @@ import UserAvatar from "@/Components/App/UserAvatar";
 import {formatMessageDateLong} from "@/helpers";
 //import {formatMessageDateLog} from "@/helpers";
 
-const MessageItem = function ({ message, attachmentClick }) {
+const MessageItem = function ({ message }) {
     const currentUser = usePage().props.auth.user;
     return (
         <div className={

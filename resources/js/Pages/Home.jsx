@@ -17,7 +17,9 @@ function Home({ messages, selectedConversation }) {
 
     useEffect(() => {
         setTimeout(() => {
-            messagesCtrRef.current.scrollTop = messagesCtrRef.current.scrollHeight;
+            if (messagesCtrRef.current) {
+                messagesCtrRef.current.scrollTop = messagesCtrRef.current.scrollHeight;
+            }
         })
     }, [selectedConversation])
 

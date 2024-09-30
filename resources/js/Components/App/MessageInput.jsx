@@ -14,6 +14,39 @@ const MessageInput = function ({conversation = null}) {
     const [inputErrorMessage, setInputErrorMessage] = useState();
     const [messageSending, setMessageSending] = useState();
 
+    const onSendMessageClick = () => {
+        if (newMessage.trim() === '') {
+            setInputErrorMessage('Message field is empty.');
+
+            setTimeout(() => {
+                setInputErrorMessage('');
+            }, 3000)
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('message', newMessage);
+        if (conversation.is_user) {
+            formData.append('receiver_id', conversation.id)
+        } else if (conversation.is_group) {
+            formData.append('group_id', conversation.id)
+        }
+
+        setMessageSending(true)
+        axios.post(route(('message.store'), formData, {
+            onUploadProgress: (progressEvent) => {
+                const progress = Math.round(progressEvent.loaded / progressEvent.total) * 100
+
+                //console.log('progress', progress)
+            }
+        })).then((response) => {
+            setNewMessage('');
+            setMessageSending(false);
+        }).catch((error) => {
+            setMessageSending(false);
+        })
+    }
+
     return (
         <div className='flex flex-wrap items-start border-t border-slate-700 py-3'>
             <div className='order-2 flex-1 xs:flex-none xs:order-1 p-2'>
@@ -41,10 +74,14 @@ const MessageInput = function ({conversation = null}) {
                 <div className='flex'>
                     <NewMessageInput
                         value={newMessage}
-                        onChange={(event) => setNewMessage(event.target.value)}
+                        onSend={onSendMessageClick}
+                         onChange={(event) => setNewMessage(event.target.value)}
+                        //onChange={(event) => console.log('input Message: ', event.target.value)}
                     />
 
-                    <button className='btn btn-info rounded-l-none'>
+                    <button className='btn btn-info rounded-l-none'
+                            onClick={onSendMessageClick}
+                    >
                         {messageSending && (
                             <span className='loading loading-spinner loading-xs'></span>
                         )}

@@ -1,13 +1,4 @@
 import {useEffect, useRef, useState} from "react";
-import {
-    PaperClipIcon,
-    PhotoIcon,
-    FaceSmileIcon,
-    HandThumbUpIcon,
-    PaperAirplaneIcon
-} from "@heroicons/react/24/solid"
-//import NewMessageInput from './NewMessageInput'
-
 const NewMessageInput = function ({value, onChange, onSend}) {
 
     const input = useRef();
@@ -20,10 +11,11 @@ const NewMessageInput = function ({value, onChange, onSend}) {
         }
     }
 
-    const onChangeEvent = (ev) => {
+    const onChangeEvent = (event) => {
         setTimeout(() => {
             adjustHeight();
         }, 10)
+        onChange(event)
     }
 
     //set input height
@@ -46,7 +38,7 @@ const NewMessageInput = function ({value, onChange, onSend}) {
             rows='1'
             placeholder='Type a message...'
             onKeyDown={onInputKeyDown}
-            onChange={(ev) => onChangeEvent(ev)}
+            onChange={(event) => onChangeEvent(event)}
             className='input input-bordered w-full rounded w-full rounded-r-none resize-none overflow-y-auto max-h-40 focus:outline-none'
         >
 

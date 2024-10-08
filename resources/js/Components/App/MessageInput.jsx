@@ -10,9 +10,10 @@ import NewMessageInput from './NewMessageInput'
 
 const MessageInput = function ({conversation = null}) {
 
-    const [newMessage, setNewMessage] = useState();
-    const [inputErrorMessage, setInputErrorMessage] = useState();
-    const [messageSending, setMessageSending] = useState();
+    const [newMessage, setNewMessage] = useState('');
+    const [inputErrorMessage, setInputErrorMessage] = useState('');
+    const [messageSending, setMessageSending] = useState(false);
+    //console.log('selectedConversation', conversation);
 
     const onSendMessageClick = () => {
         if (newMessage.trim() === '') {
@@ -26,20 +27,25 @@ const MessageInput = function ({conversation = null}) {
 
         const formData = new FormData();
         formData.append('message', newMessage);
+
         if (conversation.is_user) {
             formData.append('receiver_id', conversation.id)
         } else if (conversation.is_group) {
             formData.append('group_id', conversation.id)
         }
 
-        setMessageSending(true)
-        axios.post(route(('message.store'), formData, {
-            onUploadProgress: (progressEvent) => {
-                const progress = Math.round(progressEvent.loaded / progressEvent.total) * 100
+        console.log('conversation', conversation);
+        //console.log('formData', formData);
 
-                //console.log('progress', progress)
+        setMessageSending(true)
+
+
+        axios.post(route('message.store'), formData, {
+            onUploadProgress: (progressEvent) => {
+                const progress = Math.round(progressEvent.loaded / progressEvent.total) * 100;
+                console.log('progress', progress); // Optional for debugging
             }
-        })).then((response) => {
+        }).then((response) => {
             setNewMessage('');
             setMessageSending(false);
         }).catch((error) => {
@@ -76,7 +82,6 @@ const MessageInput = function ({conversation = null}) {
                         value={newMessage}
                         onSend={onSendMessageClick}
                          onChange={(event) => setNewMessage(event.target.value)}
-                        //onChange={(event) => console.log('input Message: ', event.target.value)}
                     />
 
                     <button className='btn btn-info rounded-l-none'

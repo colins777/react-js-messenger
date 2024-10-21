@@ -15,7 +15,7 @@ export default function ConversationHeader({selectedConversation}) {
                             href={route('dashboard')}
                             className='inline-block sm:hidden'
                         >
-                            <ArrowLeftIcon clssName='w-6' />
+                            <ArrowLeftIcon className='w-6' />
                         </Link>
 
                         {selectedConversation.is_user && (
